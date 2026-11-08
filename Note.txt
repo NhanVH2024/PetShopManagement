@@ -1,0 +1,43 @@
+"Database Tier is fully operational with PostgreSQL & Pure JDBC. Below are the internal repository APIs available for the Controller tier:
+• PetRepository(1):
+	• getAvailablePets(): Returns List<Pet> of pets where is_available = true.
+	• getPetById(int id): Returns a specific Pet object or null.
+	• addPet(Pet pet): Inserts a new pet (boolean).
+	• markAsSold(int petId): Updates pet availability to false (boolean).
+• ProductRepository(2):
+	• getAllProducts(): Returns List<Product> of all items in stock.
+	• getProductById(int id): Returns a specific Product object or null.
+	• addProduct(Product product): Inserts a new product (boolean).
+	• deductStock(int productId, int quantitySold): Decrements stock count (boolean).
+• OrderRepository(3):
+	• saveOrder(Order order): Saves order header and lines in a single SQL Transaction, automatically updating inventory and pet status (boolean).*
+• EmployeeRepository:
+	• authenticate(String username, String password): Returns an Employee instance (Manager or SalesStaff with permissions), or null.
+	• addEmployee(Employee emp): Inserts a new employee record (boolean).
+• CustomerRepository:
+	• getAllCustomers(): Returns List<Customer> of all registered customers for POS selection.
+	• getCustomerById(int id): Returns a specific Customer object or null.
+	• addCustomer(Customer customer): Registers a new customer (boolean).
+
+Ờ trong đây có các hàm quản lý của QUẢN LÝ THÚ CƯNG (1), QUẢN LÝ PHỤ KIỆN & THỨC ĂN(2), QUẢN LÝ LƯU ORDER VÀ TRANSACTON(3), QUẢN LÝ NHÂN SỰ(4), QUẢN LÝ KHÁCH HÀNG(5).
+******************************************************************blah blah
+The Data Access Tier (Pure JDBC & PostgreSQL) and all 11 OOP Models are 100% completed, verified, and pushed to branch master.
+
+Please follow these steps to start implementing the Controller tier:
+
+1. Synchronize the codebase:
+   git pull origin master
+
+2. Test accounts already seeded in PostgreSQL:
+   - Manager: username 'manager1' | password 'pass123' (Permissions: full CRUD, delete, view revenue reports)
+   - Sales Staff: username 'staff1' | password 'pass123' (Permissions: POS checkout only; delete and reports blocked)
+
+3. Technical Documentation:
+   Please check the attached file "Repository_APIs_Specification_Full_CRUD.docx" for all 20 repository methods across 5 classes (PetRepository, ProductRepository, CustomerRepository, EmployeeRepository, OrderRepository).
+
+4. Recommended Controller Task Breakdown inside package 'com.petshop.controller':
+   - AuthController.java: Handles login via employeeRepo.authenticate(user, pass) and maintains the current user session/roles.
+   - InventoryController.java: Manages Pet and Product lists, input validation, low-stock alerts (stock <= 5), and guards deletion with currentEmployee.canDelete().
+   - OrderController.java: Handles POS shopping cart, calls OOP validation (item.canSell(), item.cannotSellMessage()), calculates order.total(), and saves transactions via orderRepo.saveOrder(order).
+   - ReportController.java: Guards access with currentEmployee.canViewReports(), calls orderRepo.getDailyRevenue(startDate, endDate), and supplies data for JavaFX charts.
+
