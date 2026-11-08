@@ -96,4 +96,70 @@ public class PetRepository {
             return false;
         }
     }
+        // 5. Retrieve all pets (both available and sold) for Manager audit
+    public List<Pet> getAllPets() {
+        List<Pet> pets = new ArrayList<>();
+        String sql = "SELECT * FROM pets ORDER BY id DESC";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                pets.add(new Pet(
+                    rs.getInt("id"),
+                    rs.getString("name"),
+                    rs.getLong("price"),
+                    rs.getString("species"),
+                    rs.getString("breed"),
+                    rs.getInt("age_in_months"),
+                    rs.getBoolean("is_available"),
+                    rs.getString("photo_path")
+                ));
+            }
+        } catch (SQLException e) {
+            System.err.println("Error in getAllPets: " + e.getMessage());
+        }
+        return pets;
+    }
+
+    // 6. Update pet information (Edit inventory)
+    public boolean updatePet(Pet pet) {
+        String sql = "UPDATE pets SET name = ?, price = ?, species = ?, breed = ?, "
+                   + "age_in_months = ?, is_available = ?, photo_path = ? WHERE id = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, pet.getName());
+            pstmt.setLong(2, pet.getPrice());
+            pstmt.setString(3, pet.getSpecies());
+            pstmt.setString(4, pet.getBreed());
+            pstmt.setInt(5, pet.getAgeInMonths());
+            pstmt.setBoolean(6, pet.isAvailable());
+            pstmt.setString(7, pet.getPhotoPath());
+            pstmt.setInt(8, pet.getId());
+
+            return pstmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("Error in updatePet: " + e.getMessage());
+            return false;
+        }
+    }
+
+    // 7. Delete pet permanently (Manager role permission only)
+    public boolean deletePet(int id) {
+        String sql = "DELETE FROM pets WHERE id = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, id);
+            return pstmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("Error in deletePet: " + e.getMessage());
+            return false;
+        }
+    }
+
 }
