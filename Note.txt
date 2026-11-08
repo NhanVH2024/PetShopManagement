@@ -41,3 +41,4 @@ Please follow these steps to start implementing the Controller tier:
    - OrderController.java: Handles POS shopping cart, calls OOP validation (item.canSell(), item.cannotSellMessage()), calculates order.total(), and saves transactions via orderRepo.saveOrder(order).
    - ReportController.java: Guards access with currentEmployee.canViewReports(), calls orderRepo.getDailyRevenue(startDate, endDate), and supplies data for JavaFX charts.
 
+Đây là tổng hợp các fncs thuộc 5 repo và guide test thông qua sample có đính kèm sql. Cứ code trc ii rồi test
