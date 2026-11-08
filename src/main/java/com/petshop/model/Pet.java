@@ -38,7 +38,7 @@ public class Pet extends SaleItem {
 
     @Override
     public String cannotSellMessage() {
-        return "Thú cưng này đã bán hoặc không sẵn sàng để bán!";
+        return "This pet is already sold or unavailable for sale!";
     }
 
     @Override

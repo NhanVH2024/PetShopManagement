@@ -23,7 +23,7 @@ public class Product extends SaleItem {
 
     @Override
     public String cannotSellMessage() {
-        return "Số lượng tồn kho không đủ (chỉ còn " + stock + " sản phẩm)!";
+        return "Insufficient stock available (only \" + stock + \" items remaining)!";
     }
 
     @Override
