@@ -8,7 +8,7 @@ public class DBConnection {
     // Đường dẫn kết nối tới database petshop_db chạy trên cổng 5432
     private static final String URL = "jdbc:postgresql://localhost:5432/petshop_db";
     private static final String USER = "postgres";
-    private static final String PASSWORD = "Vhnstudent=2024"; // Đổi thành mật khẩu của bạn
+    private static final String PASSWORD = "Vhnstudent=2024"; 
 
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASSWORD);
