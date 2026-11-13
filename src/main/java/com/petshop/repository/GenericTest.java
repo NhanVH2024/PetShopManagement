@@ -10,7 +10,7 @@ public class GenericTest {
     public static void main(String[] args) {
         System.out.println("=== TESTING GENERIC & ARRAYLIST FILTER METHOD ===");
 
-               // SCENARIO 1: Filtering an ArrayList of Pets
+        // SCENARIO 1: Filtering an ArrayList of Pets
         ArrayList<Pet> petList = new ArrayList<>();
         petList.add(new Pet(1, "Milo", 3500000L, "Dog", "Poodle", 3, true, "poodle.png"));
         petList.add(new Pet(2, "Luna", 5000000L, "Cat", "British Shorthair", 4, true, "bsh.png"));
